@@ -1,25 +1,19 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "2" #set of devices that you want to use
 import sys
-import time
 import torch
 import argparse
 import traceback
-import random
-import matplotlib.pyplot as plt
+
 import time
 
 
 from importlib import import_module
 from torch.utils.tensorboard import SummaryWriter
-from torchvision.datasets import CIFAR10
-from torchvision.transforms import ToTensor
-from torch.utils.data import DataLoader
-from src.models.twocnn_GTL import twocnn_GTL
+
 
 
 from src import Range, set_logger, TensorBoardRunner, check_args, set_seed, load_dataset, load_model
-import numpy as np
 import gc
 import copy
 
@@ -59,9 +53,9 @@ def main(args, writer):
     args = check_args(args)
 
     #
-    # # create copy of the central server for FedLEx pruinig
+    # # create copy of the central server for Autoflip pruinig
     pruned_model = copy.deepcopy(model)  # or create a new instance and load state
-    server_class_pruining = import_module(f'src.server.{args.algorithm}server_pruining').__dict__[f'{args.algorithm.title()}Server']
+    server_class_pruining = import_module(f'src.server.{args.algorithm}server_Exploration').__dict__[f'{args.algorithm.title()}server']
     server_pruining  = server_class_pruining(args=args, writer=writer, server_dataset=server_dataset, client_datasets=client_datasets, model=pruned_model)
     server_pruining.update()
     
@@ -76,10 +70,6 @@ def main(args, writer):
 
     # federated learning
     for curr_round in range(1, args.R + 1):
-        #
-        # # Initial FeLEx exploration for structured pruining task
-        # if curr_round == 1:
-        #     server_pruining._aggregate()
 
         ## update round indicator
         server.round = curr_round
@@ -107,7 +97,7 @@ if __name__ == "__main__":
     #####################
     # Default arguments #
     #####################
-    parser.add_argument('--exp_name', help='experiment name', type=str, required=False, default=['Pruining'])
+    parser.add_argument('--exp_name', help='experiment name', type=str, required=False, default=['Autoflip'])
     seed = int(time.time())
     parser.add_argument('--seed', help='global random seed', type=int, default=seed)
     parser.add_argument('--device', help='device to use; `cpu`, `cuda`, `cuda:GPU_NUMBER`', type=str, default='cuda')
@@ -130,7 +120,7 @@ if __name__ == "__main__":
     - LEAF benchmarks [ FEMNIST | Sent140 | Shakespeare | CelebA | Reddit ],
     - among [ TinyImageNet | CINIC10 | BeerReviewsA | BeerReviewsL | Heart | Adult | Cover | GLEAM ]
         ''', type=str, required=False, default='CIFAR10')
-    parser.add_argument('--test_fraction', help='fraction of local hold-out dataset for evaluation', type=float, choices=[Range(0., 9e-1)], default= 0.2) #for CIFAR not IID 0.166667 EXP
+    parser.add_argument('--test_fraction', help='fraction of local hold-out dataset for evaluation', type=float, choices=[Range(0., 9e-1)], default= 0.2)
     parser.add_argument('--rawsmpl', help='fraction of raw data to be used (only used when one of `LEAF` datasets is used)', type=float, choices=[Range(0., 1.)], default=1.0)
 
     ## data augmentation arguments
@@ -188,8 +178,8 @@ if __name__ == "__main__":
     ######################
     ## federated learning settings
     parser.add_argument('--algorithm', help='type of an federated aggragation learning algorithm to be used', type=str,
-        choices=['fedavg', 'gtfed', 'fedsgd', 'fedprox', 'gtfedprox', 'fedavgm', 'scaffold', 'ditto', 'fedadagrad', 'gtfedsgd'],
-        required=False, default='gtfed'
+        choices=['fedavg', 'Autoflip'],
+        required=False, default='Autoflip'
     )
     parser.add_argument('--eval_type', help='''the evaluation type of a model trained from FL algorithm
     - `local`: evaluation of personalization model on local hold-out dataset  (i.e., evaluate personalized models using each client\'s local evaluation set)
@@ -207,7 +197,7 @@ if __name__ == "__main__":
             'seqacc', 'mse', 'mae', 'mape', 'rmse', 'r2', 'd2'
         ], nargs='+', required=False, default=['acc1','acc5','f1','precision','recall']
     )
-    parser.add_argument('--K', help='number of total cilents participating in federated training', type=int, default=20) #should be a multiple of 10
+    parser.add_argument('--K', help='number of total cilents participating in federated training', type=int, default=20)
     parser.add_argument('--R', help='number of total rounds', type=int, default=200)
     parser.add_argument('--C', help='sampling fraction of clietns per round (full participation when zero is passed)', type=float, choices=[Range(0., 1.)], default=0.05)
     parser.add_argument('--E', help='number of local epochs', type=int, default=5)
@@ -218,11 +208,11 @@ if __name__ == "__main__":
     parser.add_argument('--no_shuffle', help='do not shuffle data (if passed)', action='store_true')
     parser.add_argument('--optimizer', help='type of optimization method (should be a sub-module of `torch.optim`)', type=str, default='Adam')
     parser.add_argument('--max_grad_norm', help='a constant required for gradient clipping', type=float, choices=[Range(0., float('inf'))], default=0.)
-    parser.add_argument('--weight_decay', help='weight decay (L2 penalty)', type=float, choices=[Range(0., 1.)], default=0) #0
+    parser.add_argument('--weight_decay', help='weight decay (L2 penalty)', type=float, choices=[Range(0., 1.)], default=0)
     parser.add_argument('--momentum', help='momentum factor', type=float, choices=[Range(0., 1.)], default=0.)
-    parser.add_argument('--lr', help='learning rate for local updates in each client', type=float, choices=[Range(0., 100.)], default=0.0003)#0.0003
-    parser.add_argument('--lr_server', help='learning rate for the server opt', type=float, choices=[Range(0., 100.)], default=0.0003)#0.0003
-    parser.add_argument('--lr_decay', help='rate of learning rate decay applied per round', type=float, choices=[Range(0., 1.)], default=0.99)#0.99
+    parser.add_argument('--lr', help='learning rate for local updates in each client', type=float, choices=[Range(0., 100.)], default=0.0003)
+    parser.add_argument('--lr_server', help='learning rate for the server opt', type=float, choices=[Range(0., 100.)], default=0.0003)
+    parser.add_argument('--lr_decay', help='rate of learning rate decay applied per round', type=float, choices=[Range(0., 1.)], default=0.99)
     parser.add_argument('--lr_decay_step', help='rate of learning rate decay applied per round', type=int, default=1)
     parser.add_argument('--criterion', help='type of criterion for objective function (should be a submodule of `torch.nn`)', type=str, default='CrossEntropyLoss')
     parser.add_argument('--mu', help='constant for proximity regularization term (for algorithms `fedprox`)', type=float, choices=[Range(0., 100)], default=0.01)
@@ -245,8 +235,6 @@ if __name__ == "__main__":
     ##### Argoument for Fed Optimzation algs (Reddi et al., 2020) (https://arxiv.org/abs/2003.00295) #####
     parser.add_argument('--beta1', help='server momentum factor', type=float, choices=[Range(0., 1.)], default=0.9)
     parser.add_argument('--tau', help='server momentum factor', type=float, choices=[Range(0., 1.)], default=0.001)
-
-
 
     parser.add_argument('--plot', help='Do want to plot?', default=False)
     
