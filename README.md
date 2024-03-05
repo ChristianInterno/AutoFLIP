@@ -24,8 +24,39 @@ Plus, please install torch-related packages using one command provided by the of
 With AutoFLIP we dynamically prunes and compresses DL models within both the local clients and the global server. It leverages a federated loss exploration phase to investigate model gradient behavior across diverse datasets and losses, providing insights into parameter significance for build a efficent mask for the pruining. Our experiments showcase notable enhancements in scenarios with strong non-IID data, underscoring AutoFLIP capacity to tackle computational constraints and achieve superior global convergence. 
 
 Therefore we have to main components in our code:
-- Where we complete the exploration sesison for AutoFLIP
-- Where we perform the Federated Leargnin traning with AutoFLIP
+- Where we complete the exploration sesison for AutoFLIP (AutoFlip_Exploration)
+- Where we perform the Federated Leargnin traning with AutoFLIP (AutoFLIP)
+Additionaly we define different files for:
+- Server
+- Client
+- Aggregation algorithm
+
+```
+└───src
+    |   └───algorithm:
+    |   |       └───basealgorithm.py:  For all FL algo
+    |   |       └───`Autoflip.py` Aggregation for AutoFLIP
+    |   |       └───`fedavg.ipynb`: Aggregation for FedAVG
+    |   |       └───...
+    |   └───server: server definition 
+    |   |       └───Autoflipserver_exploration.py: For exploration phase of AutoFLIP
+    |   |       └───`Autoflipserver.py` 
+    |   |       └───`fedavgserver.py`: 
+    |   |       └───...
+    |   └───client: client definition 
+    |   |       └───Autoflipclient_exploration.py: For exploration phase of AutoFLIP
+    |   |       └───`Autoflipclient.py` 
+    |   |       └───`fedavgclient.py`: 
+    |   |       └───...
+    |   └───datasets: ...(dataset used)
+    |   └───metrics: ...(metrics zoo)
+    |   └───models: ... (Deep Neural Network definition)
+    └───GTL_utils.py: Functions to proces the guuidence pruning mask
+    └───plot_utils.py
+    └───utils.py
+└───AutoFLIP
+    └───main.py
+```
 
 ## Abstract
 Federated learning (FL) represents a pivotal shift in machine learning (ML) as it enables collaborative training of local ML models coordinated by a central aggregator, all without the need to exchange local data. However, its application on edge devices is hindered by limited computational capabilities and data communication challenges, compounded by the inherent complexity of Deep Learning (DL) models. Model pruning is identified as a key technique for compressing DL models on devices with limited resources. Nonetheless, conventional pruning techniques typically rely on manually crafted heuristics and demand human expertise to achieve a balance between model size, speed, and accuracy, often resulting in sub-optimal solutions. In this study, we introduce an automated federated learning approach utilizing informed pruning, called AutoFLIP, which dynamically prunes and compresses DL models within both the local clients and the global server. It leverages a federated loss exploration phase to investigate model gradient behavior across diverse datasets and losses, providing insights into parameter significance. Our experiments showcase notable enhancements in scenarios with strong non-IID data, underscoring AutoFLIP capacity to tackle computational constraints and achieve superior global convergence.
