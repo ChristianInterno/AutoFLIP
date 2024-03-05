@@ -54,10 +54,39 @@ Additionaly we define different files for:
     └───GTL_utils.py: Functions to proces the guuidence pruning mask
     └───plot_utils.py
     └───utils.py
+└───checkpoints
+    └───ClientPruinedGModel.py (client pruned saved model)
+    └───InitPruinedGlobalModel.py (server pruned saved model)
+└───log (saved log of the experiment)
+    └───...
+└───plot (plots of the experiments)
+    └───...
+└───result_paper (where the results are saved)
+    └───...
 └───AutoFLIP
     └───main.py
 ```
 
 ## Abstract
 Federated learning (FL) represents a pivotal shift in machine learning (ML) as it enables collaborative training of local ML models coordinated by a central aggregator, all without the need to exchange local data. However, its application on edge devices is hindered by limited computational capabilities and data communication challenges, compounded by the inherent complexity of Deep Learning (DL) models. Model pruning is identified as a key technique for compressing DL models on devices with limited resources. Nonetheless, conventional pruning techniques typically rely on manually crafted heuristics and demand human expertise to achieve a balance between model size, speed, and accuracy, often resulting in sub-optimal solutions. In this study, we introduce an automated federated learning approach utilizing informed pruning, called AutoFLIP, which dynamically prunes and compresses DL models within both the local clients and the global server. It leverages a federated loss exploration phase to investigate model gradient behavior across diverse datasets and losses, providing insights into parameter significance. Our experiments showcase notable enhancements in scenarios with strong non-IID data, underscoring AutoFLIP capacity to tackle computational constraints and achieve superior global convergence.
+
+## Example
+You can run the following example as a starting point to reproduce AutoFLIP for CIFAR10 experiment from the paper with the SEED = 1709566899 (You can also modulate different parameters):
+
+do
+    python3 main.py\
+        --exp_name "CIFAR10_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/CIFAR10/AutoFLIP \
+        --seed 1709566899 dataset CIFAR10 \
+        --split_type patho --mincls 2 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+        --algorithm autoflip --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining  0.30
+done
+
+
+## Experiments
+You can find all runcommands for the AutoFLIP experiments in `AWEI/run_BBOB.sh`. All runcommands for the ablation of SAWEI on BBOB are in `commands/command_paper.sh`.
 
