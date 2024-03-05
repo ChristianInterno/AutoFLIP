@@ -88,5 +88,5 @@ done
 
 
 ## Experiments
-You can find all runcommands for the AutoFLIP experiments in `AWEI/run_BBOB.sh`. All runcommands for the ablation of SAWEI on BBOB are in `commands/command_paper.sh`.
+All runcommands for the ablation and experiments of AUtoFLIP are in `commands/command_paper.sh`.
 
