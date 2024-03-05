@@ -1,0 +1,1120 @@
+## Non-IID
+
+
+####################################################################################################
+## MNIST 
+
+for n in {1..1}
+do
+    python3 main.py\
+        --exp_name "MNIST_{treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/MNIST/AutoFLIP \
+        --dataset MNIST \
+        --split_type patho --mincls 2 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+        --algorithm Autoflip --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining 0.30
+done
+
+####################################################################################################
+## CIFAR10 
+
+do
+    python3 main.py\
+        --exp_name "CIFAR10_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/CIFAR10/AutoFLIP \
+        --dataset CIFAR10 \
+        --split_type patho --mincls 2 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+        --algorithm gtfed --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining  0.30
+done
+
+####################################################################################################
+## CIFAR100 
+
+for n in {1..1}
+  do
+    python3 main.py\
+        --exp_name "CIFAR100_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/cifar100/AutoFLIP \
+        --dataset CIFAR100 \
+        --split_type diri --cncntrtn 1 --test_fraction 0.2 \
+        --rawsmpl 1 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 128 --dropout 0 --num_layers 6 --init_type xavier \
+        --algorithm gtfed --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.05 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining 0.30
+done
+
+####################################################################################################
+## FEMNIST 
+
+for n in {1..1}
+do
+    python3 main.py\
+        --exp_name "FEMNIST_${n}" --device cuda --result_path ./result_paper/20K/RedDim/FEMNIST/AutoFLIP \
+        --dataset FEMNIST \
+        --split_type pre --test_fraction 0.1 --rawsmpl 0.0282\
+        --model_name FEMNISTCNN --resize 28 --hidden_size 64 --dropout 0.1 --num_layers 2 \
+        --algorithm gtfed --eval_type local --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining 0.30
+done
+
+####################################################################################################
+## Shakespeare 
+
+for n in {1..1}
+do
+  python3 main.py\
+      --exp_name "$Shakespeare_${n}" --seed 42 --device cuda --result_path ./result_paper/Leaf/Shakespeare/Shakespeare/AutoFLIP\
+      --dataset Shakespeare \
+      --split_type pre --test_fraction 0.1 \
+      --model_name NextCharLSTM --num_embeddings 80 --embedding_size 8 --hidden_size 256 --num_layers 2  --init_type xavier \
+      --algorithm gtfed --eval_fraction 1 --eval_type local --eval_every 10 --eval_metrics acc1 acc5\
+      --R 200 --E 5 --C 0.016 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --perc_clients_for_mask 0.03 --Patience_mask 40 --epoochs_mask 100
+done
+
+
+
+
+
+for n in {1..1} #cheange this for multiple run
+do
+  python3 main.py\
+      --exp_name "${n}_fedavg" --device cuda --result_path ./result_paper/500K/Patho/MNIST/TwoNN/FedAvg \
+      --dataset MNIST \
+      --split_type patho --mincls 2 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm  fedavg --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+
+done
+
+for n in {1..5}
+do
+
+  python3 main.py\
+      --exp_name "${n}_gtfed" --device cuda --result_path ./result_paper/500K/Patho/MNIST/TwoNN/gtfed \
+      --dataset MNIST \
+      --split_type patho --mincls 2 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm  gtfed --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 5 --C 0.01 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.04
+done
+
+
+for n in {1..5}
+do
+
+  python3 main.py\
+      --exp_name "${n}_fedprox" --device cuda --result_path ./result_paper/500K/Patho/MNIST/TwoNN/FedProx \
+      --dataset MNIST \
+      --split_type patho --mincls 2 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm fedprox --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 5 --C 0.01 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+
+done
+
+for n in {1..5}
+do
+
+  python3 main.py\
+      --exp_name "${n}_gtfedprox" --device cuda --result_path ./result_paper/500K/Patho/MNIST/TwoNN/FedExpProx \
+      --dataset MNIST \
+      --split_type patho --mincls 2 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm gtfedprox --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 5 --C 0.01 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.04
+done
+
+
+for n in {1..3}
+do
+
+  python3 main.py\
+      --exp_name "${n}_fedsgd" --device cuda --result_path ./result_paper/500K/Patho/MNIST/TwoNN/FedSgd \
+      --dataset MNIST \
+      --split_type patho --mincls 2 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm  fedsgd --eval_type both --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 1 --C 0.01 --B 0 --beta 0.9 \
+      --optimizer SGD --lr  0.03 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+
+done
+
+for n in {1..3}
+do
+
+  python3 main.py\
+      --exp_name "${n}_gtfedsgd" --device cuda --result_path ./result_paper/500K/Patho/MNIST/TwoNN/FedExpSgd \
+      --dataset MNIST \
+      --split_type patho --mincls 2 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm gtfedsgd --eval_type both --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 1 --C 0.01 --B 0 --beta 0.9 \
+      --optimizer SGD --lr  0.03 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.04
+done
+
+
+
+
+####################################################################################################
+
+
+## test for CIFAR10 Patho paper
+for n in {1..1}
+  do
+        python3 main.py\
+            --exp_name "easyNormal${n}_fedavg" --device cuda --result_path ./result_paper/20K/Red/TwoCNN/FedExp \
+            --dataset CIFAR10 \
+            --split_type diri --cncntrtn 1 --test_fraction 0.2 \
+            --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+            --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+            --algorithm fedavg --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+            --K 10 --R 100 --E 5 --C 0.20 --B 350 --beta 0.9 \
+            --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+ done
+
+
+    
+for n in {1..1}
+  do
+    python3 main.py\
+        --exp_name "Pr_with_only_maskTR_${treeshold_pruining}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/TwoCNN/FedExp \
+        --dataset CIFAR10 \
+        --split_type iid --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+        --algorithm gtfed --eval_type both --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.20 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 1 --perc_clients_for_mask 0.1 --mask_pruining True --treeshold_pruining 20
+  done
+
+for n in {1..1}
+do
+  for treeshold in 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+  do
+    python3 main.py\
+        --exp_name "Pr_with_only_maskTR_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/TwoCNN/FedExp \
+        --dataset CIFAR10 \
+        --split_type patho --mincls 2 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+        --algorithm gtfed --eval_type both --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining $treeshold
+  done
+done
+
+
+
+for n in {1..1}
+do
+  for treeshold in 0.1 0.2 0.3 0.4 0.5
+  do
+    python3 main.py\
+        --exp_name "plotpatho${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/TwoCNN/FedExp \
+        --dataset CIFAR10 \
+        --split_type patho --mincls 2 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+        --algorithm gtfed --eval_type both --eval_every 5 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining $treeshold
+  done
+done
+
+
+for n in {1..1}
+do
+  for treeshold in 0.1 0.2 0.3 0.4 0.5
+  do
+    python3 main.py\
+        --exp_name "Updt_Pr_after_with_only_maskTR_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/MNIST/FedExp \
+        --dataset MNIST \
+        --split_type patho --mincls 2 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+        --algorithm gtfed --eval_type both --eval_every 5 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining $treeshold
+  done
+done
+
+for n in {1..3}
+do
+  for alg in fedprox
+  do
+    python3 main.py\
+        --exp_name "${n}_${alg}" --device cuda --result_path ./result_paper/500K/Patho/CIFAR10/TwoCNN/FedProx \
+        --dataset CIFAR10 \
+        --split_type patho --mincls 2 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+        --algorithm $alg --eval_type both --eval_every 50 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 500 --R 200 --E 5 --C 0.01 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --mu 0.01
+  done
+done
+
+for n in {1..3}
+do
+    python3 main.py\
+        --exp_name "10_gtfedprox" --device cuda --result_path ./result_paper/500K/CIFAR10/TwoCNN/FedExpProx \
+        --dataset CIFAR10 \
+        --split_type patho --mincls 2 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+        --algorithm gtfedprox --eval_type both --eval_every 50 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 500 --R 200 --E 5 --C 0.01 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --mu 0.01\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.04\
+
+done
+
+
+for n in {1..3}
+do
+
+  python3 main.py\
+      --exp_name "${n}_fedsgd" --device cuda --result_path ./result_paper/500K/Patho/CIFAR10/TwoCNN/FedSgd \
+      --dataset CIFAR10 \
+      --split_type patho --mincls 2 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+      --algorithm  fedsgd --eval_type both --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 1 --C 0.01 --B 0 --beta 0.9 \
+      --optimizer SGD --lr  0.03 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+
+done
+
+for n in {1..3}
+do
+
+  python3 main.py\
+      --exp_name "${n}_gtfedsgd" --device cuda --result_path ./result_paper/500K/Patho/CIFAR10/TwoCNN/FedExpSgd \
+      --dataset CIFAR10 \
+      --split_type patho --mincls 2 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+      --algorithm gtfedsgd --eval_type both --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 1 --C 0.01 --B 0 --beta 0.9 \
+      --optimizer SGD --lr  0.03 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.04
+done
+
+
+
+
+#####################################################################################################
+#Dirichlet Experiments
+#####################################################################################################
+## test for MNIST Diri 0.05
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedavg" --device cuda --result_path ./result_paper/500K/Diri/MNIST/alpha_005/TwoNN/FedAvg \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.05 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm fedavg --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 500 --R 200 --E 5 --C 0.01 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+
+for n in {1..5}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --device cuda --result_path ./result_paper/500K/Diri/MNIST/alpha_005/TwoNN/FedExp  \
+      --dataset MNIST \
+      --split_type diri --cncntrtn 0.05 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 5 --C 0.01 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.04
+done
+
+
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedprox" --device cuda --result_path ./result_paper/500K/Diri/MNIST/alpha_005/TwoNN/FedProx \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.05 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm fedprox --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 500 --R 200 --E 5 --C 0.01 --B 350 --beta 0.9 \
+        --mu 0.01\
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+done
+
+for n in {1..5}
+do
+    python3 main.py\
+        --exp_name "${n}_gtfedprox" --device cuda --result_path ./result_paper/500K/Diri/MNIST/alpha_005/TwoNN/FedExpProx  \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.05 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm gtfedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 500 --R 200 --E 5 --C 0.01 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --mu 0.01\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.04
+
+done
+
+
+for n in {1..3}
+do
+
+  python3 main.py\
+      --exp_name "${n}_fedsgd" --device cuda --result_path ./result_paper/500K/Patho/CIFAR10/TwoCNN/FedSgd \
+      --dataset CIFAR10 \
+      --split_type patho --mincls 2 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+      --algorithm  fedsgd --eval_type both --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 1 --C 0.01 --B 0 --beta 0.9 \
+      --optimizer SGD --lr  0.03 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+
+done
+
+for n in {1..3}
+do
+
+  python3 main.py\
+      --exp_name "${n}_gtfedsgd" --device cuda --result_path ./result_paper/500K/Patho/CIFAR10/TwoCNN/FedExpSgd \
+      --dataset CIFAR10 \
+      --split_type patho --mincls 2 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+      --algorithm gtfedsgd --eval_type both --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 500 --R 200 --E 1 --C 0.01 --B 0 --beta 0.9 \
+      --optimizer SGD --lr  0.03 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.04
+done
+
+## test for MNIST Diri 0.10
+
+for n in {1..10}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedavg" --device cuda --result_path ./result_paper/Diri/MNIST/alpha_010/TwoNN/FedAvg \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.10 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm fedavg --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+done
+
+
+for n in {1..8}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --device cuda --result_path ./result_paper/Diri/MNIST/alpha_010/TwoNN/FedExp  \
+      --dataset MNIST \
+      --split_type diri --cncntrtn 0.10 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1
+done
+
+
+for n in {1..10}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedprox" --device cuda --result_path ./result_paper/Diri/MNIST/alpha_010/TwoNN/FedProx \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.10 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm fedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+done
+
+for n in {2..10}
+    do
+    python3 main.py\
+        --exp_name "${n}_gtfedprox" --device cuda --result_path ./result_paper/Diri/MNIST/alpha_010/TwoNN/FedExpProx  \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.10 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm gtfedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --mu 0.01\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1
+
+    done
+
+## test for MNIST Diri 0.30
+
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedavg" --device cuda --result_path ./result_paper/100K/MNIST/alpha_030/TwoNN/FedAvg \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.30 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm fedavg --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+done
+
+
+for n in {1..5}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --device cuda --result_path ./result_paper/100K/MNIST/alpha_030/TwoNN/FedExp  \
+      --dataset MNIST \
+      --split_type diri --cncntrtn 0.30 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.20
+done
+
+
+for n in {1..10}
+do
+    python3 main.py\
+        --exp_name "1_fedprox" --device cuda --result_path ./result_paper/100K/MNIST/alpha_030/TwoNN/FedProx \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.30 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm fedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+done
+
+for n in {1..5}
+do
+    python3 main.py\
+        --exp_name "${n}_gtfedprox" --device cuda --result_path ./result_paper/100K/MNIST/alpha_030/TwoNN/FedExpProx  \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.30 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm gtfedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --mu 0.01\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.20
+
+done
+
+## test for MNIST Diri 0.60
+
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedavg" --device cuda --result_path ./result_paper/100K/MNIST/alpha_060/TwoNN/FedAvg \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.60 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm fedavg --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+
+for n in {1..5}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --device cuda --result_path ./result_paper/100K/MNIST/alpha_060/TwoNN/FedExp  \
+      --dataset MNIST \
+      --split_type diri --cncntrtn 0.60 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.20
+done
+
+
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedprox" --device cuda --result_path ./result_paper/100K/MNIST/alpha_060/TwoNN/FedProx \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.60 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm fedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+for n in {1..5}
+do
+    python3 main.py\
+        --exp_name "${n}_gtfedprox" --device cuda --result_path ./result_paper/100K/MNIST/alpha_060/TwoNN/FedExpProx  \
+        --dataset MNIST \
+        --split_type diri --cncntrtn 0.60 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoNN --hidden_size 200 --dropout 0.1 --num_layers 2 --init_type xavier \
+        --algorithm gtfedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --mu 0.01\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.20
+
+done
+
+
+
+
+#############################################################
+## test for CIFAR10 Diri 0.05
+#############################################################
+
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedavg" --device cuda --result_path ./result_paper/100K/CIFAR10/alpha_005/TwoCNN/FedAvg \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.05 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm fedavg --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+
+for n in {1..5}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --device cuda --result_path ./result_paper/100K/CIFAR10/alpha_005/TwoCNN/FedExp  \
+      --dataset CIFAR10 \
+      --split_type diri --cncntrtn 0.05 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.20
+done
+
+
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedprox" --device cuda --result_path ./result_paper/100K/CIFAR10/Diri/alpha_005/TwoCNN/FedProx \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.05 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm fedprox --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+for n in {1..5}
+do
+    python3 main.py\
+        --exp_name "${n}_gtfedprox" --device cuda --result_path ./result_paper/100K/CIFAR10/Diri/alpha_005/TwoCNN/FedExpProx  \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.05 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm gtfedprox --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --mu 0.01\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.20
+
+done
+
+## test for CIFAR10 Diri 0.10
+
+for n in {1..10}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedavg" --device cuda --result_path ./result_paper/Diri/CIFAR10/Diri/alpha_010/TwoCNN/FedAvg \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.10 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm fedavg --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+
+for n in {1..10}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --device cuda --result_path ./result_paper/Diri/CIFAR10/alpha_010/TwoCNN/FedExp  \
+      --dataset CIFAR10 \
+      --split_type diri --cncntrtn 0.10 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1
+done
+
+
+for n in {1..10}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedprox" --device cuda --result_path ./result_paper/Diri/CIFAR10/alpha_010/TwoCNN/FedProx \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.10 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm fedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+for n in {8..10}
+do
+    python3 main.py\
+        --exp_name "${n}_gtfedprox" --device cuda --result_path ./result_paper/Diri/CIFAR10/alpha_010/TwoCNN/FedExpProx  \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.10 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm gtfedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --mu 0.01\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1
+
+done
+
+## test for CIFAR10 Diri 0.30
+
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedavg" --device cuda --result_path ./result_paper/100K/CIFAR10/alpha_030/TwoCNN/FedAvg \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.30 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm fedavg --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+
+for n in {1..5}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --device cuda --result_path ./result_paper/100K/CIFAR10/alpha_030/TwoCNN/FedExp  \
+      --dataset CIFAR10 \
+      --split_type diri --cncntrtn 0.30 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.20
+done
+
+
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedprox" --device cuda --result_path ./result_paper/100K/CIFAR10/alpha_030/TwoCNN/FedProx \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.30 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm fedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+for n in {1..5}
+do
+    python3 main.py\
+        --exp_name "${n}_gtfedprox" --device cuda --result_path ./result_paper/100K/Diri/CIFAR10/alpha_030/TwoCNN/FedExpProx  \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.30 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm gtfedprox --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --mu 0.01\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.20
+
+done
+
+## test for CIFAR10 Diri 0.60
+
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedavg" --device cuda --result_path ./result_paper/100K/CIFAR10/alpha_060/TwoCNN/FedAvg \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.60 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm fedavg --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+
+for n in {3..5}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --device cuda --result_path ./result_paper/100K/Diri/CIFAR10/alpha_060/TwoCNN/FedExp  \
+      --dataset CIFAR10 \
+      --split_type diri --cncntrtn 0.60 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.20
+done
+
+
+for n in {1..5}
+  do
+    python3 main.py\
+        --exp_name "${n}_fedprox" --device cuda --result_path ./result_paper/100K/Diri/CIFAR10/alpha_060/TwoCNN/FedProx \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.60 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm fedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+  done
+
+for n in {1..5}
+do
+    python3 main.py\
+        --exp_name "${n}_gtfedprox" --device cuda --result_path ./result_paper/100K/Diri/CIFAR10/alpha_060/TwoCNN/FedExpProx  \
+        --dataset CIFAR10 \
+        --split_type diri --cncntrtn 0.60 --test_fraction 0.2 \
+        --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 2 --init_type xavier \
+        --algorithm gtfedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 100 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --mu 0.01\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 0.20
+
+done
+
+############################################################################################
+############################################################################################
+
+############################################################################################
+############################################################################################
+
+############################################################################################
+
+## test for CIFAR100 Diri
+for n in {1..1}
+do
+  for treeshold in 0.1 0.2 0.3 0.4 0.5
+  do
+    python3 main.py\
+        --exp_name "PLT_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/cifar100/FedExp \
+        --dataset CIFAR100 \
+        --split_type diri --cncntrtn 1 --test_fraction 0.2 \
+        --rawsmpl 1 --resize 24  --randhf 0.5  --randjit 0.5\
+        --model_name TwoCNN --hidden_size 128 --dropout 0 --num_layers 6 --init_type xavier \
+        --algorithm gtfed --eval_type both --eval_every 5 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.05 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining $treeshold
+  done
+done
+
+
+for n in {1..3}
+do
+  python3 main.py\
+      --exp_name "${n}_fedavg" --seed 42 --device cuda --result_path ./result_paper/100K/Diri/CIFAR100/alpha_100/BIGCNN/FedAvg  \
+      --dataset CIFAR100 \
+      --split_type diri --cncntrtn 100 --test_fraction 0.2 \
+      --rawsmpl 1 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name BIGCNN --hidden_size 256 --dropout 0.3 --num_layers 6 --init_type xavier \
+      --algorithm fedavg --eval_type both --eval_every 20 --eval_metrics acc1 acc5\
+      --K 100 --R 500 --E 5 --C 0.05 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0015 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+done
+
+
+for n in {1..3}
+do
+  python3 main.py\
+      --exp_name "${n}_fedavg" --seed 42 --device cuda --result_path ./result_paper/100K/Diri/CIFAR100/alpha_100/ResNet/FedAvg  \
+      --dataset CIFAR100 \
+      --split_type diri --cncntrtn 100 --test_fraction 0.2 \
+      --rawsmpl 1 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name ResNet34 --hidden_size 16 --dropout 0.1 --num_layers 0 --init_type xavier \
+      --algorithm fedavg --eval_type both --eval_every 50 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 100 --R 200 --E 5 --C 0.05 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+done
+
+for n in {1..3}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --seed 42 --device cuda --result_path ./result_paper/100K/Diri/CIFAR100/alpha_100/ResNet/FedExp  \
+      --dataset CIFAR100 \
+      --split_type diri --cncntrtn 100 --test_fraction 0.2 \
+      --rawsmpl 1 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name ResNet34 --hidden_size 12 --dropout 0.1 --num_layers 2 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 100 --R 200 --E 5 --C 0.05 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 100  --perc_clients_for_mask 0.20
+done
+
+for n in {1..3}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --seed 42 --device cuda --result_path ./result_paper/100K/Diri/CIFAR100/alpha_100/CNN/FedExp  \
+      --dataset CIFAR100 \
+      --split_type diri --cncntrtn 100 --test_fraction 0.2 \
+      --rawsmpl 1 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 128 --dropout 0.1 --num_layers 6 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 20 --eval_metrics acc1 acc5 \
+      --K 100 --R 500 --E 5 --C 0.05 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 150  --perc_clients_for_mask 0.20
+done
+
+
+for n in {1..3}
+do
+  python3 main.py\
+      --exp_name "${n}_fedprox" --seed 42 --device cuda --result_path ./result_paper/100K/Diri/CIFAR100/alpha_100/CNN/FedProx  \
+      --dataset CIFAR100 \
+      --split_type diri --cncntrtn 100 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 128 --dropout 0.1 --num_layers 6 --init_type xavier \
+      --algorithm fedprox --eval_type both --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 100 --R 200 --E 5 --C 0.05 --B 350 --beta 0.9 \
+      --mu 0.01 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+
+done
+
+for n in {1..3}
+do
+  python3 main.py\
+      --exp_name "${n}_fedexprox" --seed 42 --device cuda --result_path ./result_paper/100K/Diri/CIFAR100/alpha_100/CNN/FedExpProx \
+      --dataset CIFAR100 \
+      --split_type diri --cncntrtn 100 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name TwoCNN --hidden_size 128 --dropout 0.1 --num_layers 6 --init_type xavier \
+      --algorithm gtfedprox --eval_type both --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 100 --R 200 --E 5 --C 0.05 --B 350 --beta 0.9 \
+      --mu 0.01\
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss --Patience_mask 40 --epoochs_mask 150  --perc_clients_for_mask 0.20
+done
+
+############################################################################################
+
+## test for TinyImageNet Diri
+
+
+for n in {1..1}
+do
+  python3 main.py\
+      --exp_name "${n}_fedavg" --seed 42 --device cuda --result_path ./result_paper/200K/Diri/TinyImageNet/alpha_10/MobileNet/FedAvg  \
+      --dataset TinyImageNet \
+      --split_type diri --cncntrtn 10 --test_fraction 0.2 \
+      --rawsmpl 0.5 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name BIGCNN --hidden_size 256 --dropout 0.1 --num_layers 6 --init_type xavier \
+      --algorithm fedavg --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 200 --R 500 --E 5 --C 0.025 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+done
+
+for n in {1..1}
+do
+  python3 main.py\
+      --exp_name "${n}_gtfed" --seed 42 --device cuda --result_path ./result_paper/200K/Diri/CIFAR100/alpha_10/ResNet/FedExp  \
+      --dataset TinyImageNet \
+      --split_type diri --cncntrtn 10 --test_fraction 0.2 \
+      --rawsmpl 1 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name BIGCNN --hidden_size 256 --dropout 0.1 --num_layers 6 --init_type xavier \
+      --algorithm gtfed --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 200 --R 500 --E 5 --C 0.025 --B 250 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --Patience_mask 40 --epoochs_mask 100  --perc_clients_for_mask 0.10
+done
+
+
+for n in {1..1}
+do
+  python3 main.py\
+      --exp_name "${n}_fedprox" --seed 42 --device cuda --result_path ./result_paper/200K/Diri/TinyImageNet/alpha_10/squeezenet/FedProx  \
+      --dataset TinyImageNet \
+      --split_type diri --cncntrtn 10 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name BIGCNN --hidden_size 256 --dropout 0.1 --num_layers 6 --init_type xavier \
+      --algorithm fedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 200 --R 500 --E 5 --C 0.025 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss \
+done
+
+for n in {1..1}
+do
+  python3 main.py\
+      --exp_name "${n}_fedexprox" --seed 42 --device cuda --result_path ./result_paper/200K/Diri/TinyImageNet/alpha_10/squeezenet/FedExpProx \
+      --dataset TinyImageNet \
+      --split_type diri --cncntrtn 10 --test_fraction 0.2 \
+      --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+      --model_name BIGCNN --hidden_size 256 --dropout 0.1 --num_layers 6 --init_type xavier \
+      --algorithm gtfedprox --eval_type both --eval_every 1 --eval_metrics acc1 acc5 f1 precision recall\
+      --K 200 --R 500 --E 5 --C 0.025 --B 350 --beta 0.9 \
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss --Patience_mask 40 --epoochs_mask 150  --perc_clients_for_mask 0.10
+done
+
+###############################
+#FEMNIST LEAF
+##############################
+for n in {3..10}
+do
+  python3 main.py \
+    --exp_name "${n}_LEAF_FEMNIST" --seed 42 --device cuda --result_path ./result_paper/Leaf/FEMNIST/CNNFEMNIST/FedAvg\
+    --dataset FEMNIST \
+    --split_type pre --test_fraction 0.1 --rawsmpl 0.0282\
+    --model_name FEMNISTCNN --resize 28 --hidden_size 64 --dropout 0.1 --num_layers 2 \
+    --algorithm fedavg --eval_fraction 1 --eval_type local --eval_every 30 --eval_metrics acc1 acc5 \
+    --R 200 --E 5 --C 0.1 --B 350 --beta 0.9 \
+    --optimizer Adam --lr 0.0003  --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+    
+done
+
+for n in {1..1}
+do
+  for treeshold in 0.1 0.2 0.3 0.4 0.5
+  do
+    python3 main.py\
+        --exp_name "Updt_Pr_after_with_only_maskTR_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/CNNFEMNIST/FedExp \
+        --dataset FEMNIST \
+        --split_type pre --test_fraction 0.1 --rawsmpl 0.0282\
+        --model_name FEMNISTCNN --resize 28 --hidden_size 64 --dropout 0.1 --num_layers 2 \
+        --algorithm gtfed --eval_type local --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+        --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining $treeshold
+  done
+done
+
+for n in {1..10}
+do
+  python3 main.py \
+    --exp_name "${n}_LEAF_FEMNIST" --seed 42 --device cuda --result_path ./result_paper/Leaf/FEMNIST/CNNFEMNIST/FedExp\
+    --dataset FEMNIST \
+    --split_type pre --test_fraction 0.1 --rawsmpl 0.0282\
+    --model_name FEMNISTCNN --resize 28 --hidden_size 64 --dropout 0.1 --num_layers 2 \
+    --algorithm gtfed --eval_fraction 1 --eval_type local --eval_every 30 --eval_metrics acc1 acc5 \
+    --R 200 --E 5 --C 0.1 --B 350 --beta 0.9 \
+    --optimizer Adam --lr 0.0003  --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+    --perc_clients_for_mask 0.2 --Patience_mask 40 --epoochs_mask 150
+    
+done
+
+for n in {1..10}
+do
+  python3 main.py \
+    --exp_name "${n}_LEAF_FEMNIST" --seed 42 --device cuda --result_path ./result_paper/Leaf/FEMNIST/CNNFEMNIST/FedExpProx\
+    --dataset FEMNIST \
+    --split_type pre --test_fraction 0.1 --rawsmpl 0.0282\
+    --model_name FEMNISTCNN --resize 28 --hidden_size 64 --dropout 0.1 --num_layers 2 \
+    --algorithm gtfedprox --eval_fraction 1 --eval_type local --eval_every 30 --eval_metrics acc1 acc5 \
+    --R 200 --E 5 --C 0.1 --B 350 --beta 0.9 \
+    --optimizer Adam --lr 0.0003  --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+    --perc_clients_for_mask 0.2 --Patience_mask 40 --epoochs_mask 150
+
+    
+done
+
+for n in {1..10}
+do
+  python3 main.py \
+    --exp_name "${n}_LEAF_FEMNIST" --seed 42 --device cuda --result_path ./result_paper/Leaf/FEMNIST/CNNFEMNIST/FedProx\
+    --dataset FEMNIST \
+    --split_type pre --test_fraction 0.1 --rawsmpl 0.0282\
+    --model_name FEMNISTCNN --resize 28 --hidden_size 64 --dropout 0.1 --num_layers 2 \
+    --algorithm fedprox --eval_fraction 1 --eval_type local --eval_every 30 --eval_metrics acc1 acc5 \
+    --R 200 --E 5 --C 0.1 --B 350 --beta 0.9 \
+    --optimizer Adam --lr 0.0003  --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+    
+done
+
+################################################################################################
+#computation loss function
+
+for alg in fedavg gtfed
+do
+    for alpha in 0.05
+    do
+        python3 main.py\
+            --exp_name "${alg}_MNIST_diri_TwoNN_${alpha}_LossExp_cifa10" --seed 42 --device cuda \
+            --dataset CIFAR10 \
+            --split_type diri --cncntrtn $alpha --test_fraction 0.2 \
+            --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
+            --model_name TwoCNN  --hidden_size 32 --dropout 0.1 --num_layers 2 --init_type xavier  \
+            --algorithm $alg --eval_type both --eval_every 1 --eval_metrics acc1 \
+            --K 10 --R 3 --E 5 --C 0.2 --B 350 --beta 0.9 \
+            --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
+    done
+done
+
