@@ -52,7 +52,7 @@ do
         --dataset CIFAR10 \
         --split_type patho --mincls 2 --test_fraction 0.2 \
         --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
-        --model_name fedavg --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
+        --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
         --algorithm gtfed --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
         --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
         --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
