@@ -52,17 +52,17 @@ def main(args, writer):
     # check all args before FL
     args = check_args(args)
 
-    #
-    # # create copy of the central server for Autoflip pruinig
-    pruned_model = copy.deepcopy(model)  # or create a new instance and load state
-    server_class_pruining = import_module(f'src.server.{args.algorithm}server_Exploration').__dict__[f'{args.algorithm.title()}server']
-    server_pruining  = server_class_pruining(args=args, writer=writer, server_dataset=server_dataset, client_datasets=client_datasets, model=pruned_model)
-    server_pruining.update()
-    
-    # Explicit cleanup
-    del server_pruining
-    # Optionally force garbage collection, though usually not necessary
-    gc.collect()
+    if args.algorithm == 'Autoflip':
+        # # create copy of the central server for Autoflip pruinig
+        pruned_model = copy.deepcopy(model)  # or create a new instance and load state
+        server_class_pruining = import_module(f'src.server.{args.algorithm}server_Exploration').__dict__[f'{args.algorithm.title()}server']
+        server_pruining  = server_class_pruining(args=args, writer=writer, server_dataset=server_dataset, client_datasets=client_datasets, model=pruned_model)
+        server_pruining.update()
+
+        # Explicit cleanup
+        del server_pruining
+        # Optionally force garbage collection, though usually not necessary
+        gc.collect()
 
     # create central server
     server_class = import_module(f'src.server.{args.algorithm}server').__dict__[f'{args.algorithm.title()}Server']
@@ -235,10 +235,11 @@ if __name__ == "__main__":
     ##### Argoument for Fed Optimzation algs (Reddi et al., 2020) (https://arxiv.org/abs/2003.00295) #####
     parser.add_argument('--beta1', help='server momentum factor', type=float, choices=[Range(0., 1.)], default=0.9)
     parser.add_argument('--tau', help='server momentum factor', type=float, choices=[Range(0., 1.)], default=0.001)
-
     parser.add_argument('--plot', help='Do want to plot?', default=False)
-    
     parser.add_argument('--CEXP2', help='N', type=int, default=1)
+
+    parser.add_argument('--random_pruning', help='Do want random pruning', default=False)
+
 
     
 
