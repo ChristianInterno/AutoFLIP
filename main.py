@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2" #set of devices that you want to use
+os.environ["CUDA_VISIBLE_DEVICES"] = "0" #set of devices that you want to use
 import sys
 import torch
 import argparse
