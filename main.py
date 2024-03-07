@@ -65,7 +65,7 @@ def main(args, writer):
         gc.collect()
 
     # create central server
-    server_class = import_module(f'src.server.{args.algorithm}server').__dict__[f'{args.algorithm.title()}Server']
+    server_class = import_module(f'src.server.{args.algorithm}server').__dict__[f'{args.algorithm.title()}server']
     server = server_class(args=args, writer=writer, server_dataset=server_dataset, client_datasets=client_datasets, model=model)
 
     # federated learning
