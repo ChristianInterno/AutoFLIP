@@ -16,16 +16,17 @@ git checkout [branch-name]
 For the experimental code from this repository, see below.
 
 ## Installation
-:warning: Note: AutoFLIP has been tested exclusively on Linux environments.
+> :warning: Note: AutoFLIP has been tested exclusively on Linux environments.
 
 First, create a fresh conda environment and activate it:
-
+```bash
 conda create --name autoflip python=3.8
 conda activate autoflip
-
+```
 Install the required packages:
-
+```bash
 conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 torchtext==0.13.0 cudatoolkit=11.6 -c pytorch -c conda-forge
+```
 
 Please install torch-related packages using one command provided by the official guide (See official installation guide); e.g., conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 torchtext==0.13.0 cudatoolkit=11.6 -c pytorch -c conda-forge
 
@@ -70,7 +71,6 @@ AutoFLIP/
 ├── plots/
 ├── result_paper/
 └── main.py
-
 ```
 
 ## Abstract
@@ -78,7 +78,7 @@ Federated learning (FL) represents a pivotal shift in machine learning (ML) as i
 
 ## Example
 Start your AutoFLIP journey with the following example, which reproduces the CIFAR10 experiment from the paper:
-
+```
 do
     python3 main.py\
         --exp_name "CIFAR10_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/CIFAR10/AutoFLIP \
@@ -91,8 +91,7 @@ do
         --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
         --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining  0.30
 done
-
-
+```
 ## Experiments
 All runcommands for the ablation and experiments of AUtoFLIP are in `commands/command_paper.sh`.
 
