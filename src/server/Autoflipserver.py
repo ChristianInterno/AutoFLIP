@@ -123,7 +123,6 @@ class Autoflipserver(Autoflipbaseserver):
                     total=len(client_datasets)
             ):
                 ##########################################
-                # Questo e per esperimento LEAF, per  non creare scout per ogni client ne selezionamo solo un percentuale
                 if identifier in clients_to_create_mask:
                     client, mask = workhorse.submit(__create_client, identifier, datasets).result()
                     clients.append(client)
