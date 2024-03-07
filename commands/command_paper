@@ -1,9 +1,9 @@
 ## Non-IID
 
 
-####################################################################################################
-## MNIST 
+####################### MNIST #######################
 
+## AUTOFLIP
 for n in {1..1}
 do
     python3 main.py\
@@ -18,6 +18,7 @@ do
         --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining 0.30
 done
 
+## FEDAVG for Rand_Pruning add: --random_pruning True 
 for n in {1..1}
 do
     python3 main.py\
@@ -30,9 +31,10 @@ do
         --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
         --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
 done
-####################################################################################################
-## CIFAR10 
+####################### CIFAR10 #######################
 
+
+## AUTOFLIP
 do
     python3 main.py\
         --exp_name "CIFAR10_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/CIFAR10/AutoFLIP \
@@ -46,6 +48,7 @@ do
         --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining  0.30
 done
 
+## FEDAVG for Rand_Pruning add: --random_pruning True 
 do
     python3 main.py\
         --exp_name "CIFAR10_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/CIFAR10/FedAvg \
@@ -58,9 +61,10 @@ do
         --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
 done
 
-####################################################################################################
-## CIFAR100 
+####################### CIFAR100 #######################
+ 
 
+## AUTOFLIP
 for n in {1..1}
   do
     python3 main.py\
@@ -75,6 +79,7 @@ for n in {1..1}
         --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining 0.30
 done
 
+## FEDAVG for Rand_Pruning add: --random_pruning True 
 for n in {1..1}
   do
     python3 main.py\
@@ -88,9 +93,10 @@ for n in {1..1}
         --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
 done
 
-####################################################################################################
-## FEMNIST 
+####################### FEMNIST #######################
 
+
+## AUTOFLIP
 for n in {1..1}
 do
     python3 main.py\
@@ -104,6 +110,7 @@ do
         --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining 0.30
 done
 
+## FEDAVG for Rand_Pruning add: --random_pruning True 
 for n in {1..1}
 do
     python3 main.py\
@@ -116,9 +123,10 @@ do
         --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
 done
 
-####################################################################################################
-## Shakespeare 
+####################### Shakespeare #######################
+ 
 
+## AUTOFLIP
 for n in {1..1}
 do
   python3 main.py\
@@ -132,6 +140,8 @@ do
       --perc_clients_for_mask 0.03 --Patience_mask 40 --epoochs_mask 150 --mask_pruining True --treeshold_pruining 0.30
 done
 
+
+## FEDAVG for Rand_Pruning add: --random_pruning True 
 for n in {1..1}
 do
   python3 main.py\
@@ -144,8 +154,8 @@ do
       --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
 done
 
-####################################################################################################
-## Ablation 
+####################### Ablation #######################
+
 
 for n in {1..1}
 do
