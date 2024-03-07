@@ -10,7 +10,8 @@ Before diving into the specifics, ensure you have activated your preferred virtu
 ```bash
 git clone [AutoFLIP-repo-url] 
 cd AutoFLIP 
-git checkout [branch-name] 
+git checkout [branch-name]
+```
 
 For the experimental code from this repository, see below.
 
