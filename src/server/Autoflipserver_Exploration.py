@@ -162,7 +162,6 @@ class Autoflipserver(Autoflipbaseserver):
                     total=len(client_datasets)
             ):
                 ##########################################
-                #Questo e per esperimento LEAF, per  non creare scout per ogni client ne selezionamo solo un percentuale
                 if identifier in clients_to_create_mask:
                     client, mask = workhorse.submit(__create_client, identifier, datasets).result()
                     clients.append(client)
@@ -445,31 +444,6 @@ class Autoflipserver(Autoflipbaseserver):
                 updated_mask[name] = updated_mask_value
 
             return updated_mask
-
-        # def update_mask_based_on_quantiles_single_function(mask, initial_params, mask_quantile, initial_value_quantile,
-        #                                                    device):
-        #     all_mask_values = torch.cat([v.flatten().to(device) for v in mask.values()])
-        #     all_initial_values = torch.cat([v.flatten().to(device) for k, v in initial_params.items() if k in mask])
-        #
-        #     mask_threshold = torch.quantile(all_mask_values, mask_quantile).item()
-        #     initial_value_threshold = torch.quantile(all_initial_values, initial_value_quantile).item()
-        #
-        #     updated_mask = {}
-        #     for name, mask_value in mask.items():
-        #         if name in initial_params:
-        #             initial_param_value = initial_params[name].to(device)
-        #             mask_value = mask_value.to(device)
-        #
-        #             condition_mask = mask_value.flatten() > mask_threshold
-        #             condition_initial = initial_param_value.flatten() > initial_value_threshold
-        #             # Use logical AND to ensure both conditions are met
-        #             condition = condition_mask & condition_initial
-        #
-        #             updated_mask_value = torch.where(condition.view_as(mask_value), torch.zeros_like(mask_value),
-        #                                              mask_value)
-        #             updated_mask[name] = updated_mask_value
-        #
-        #     return updated_mask
 
         def delete_model_file(model_path):
             # Check if the file exists
