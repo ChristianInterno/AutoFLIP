@@ -99,32 +99,6 @@ def plot_Trajectory_l2(trajectories, save_path_t):
         with open(f'{save_path_t}.json', "w") as json_file:
             json.dump(data_to_save, json_file)
 
-# def plot_Trajectory_l1(trajectories, save_path_t):
-#     iterations = list(range(0, len(trajectories)))  # Create a list of iteration indices
-#     # Assuming you have a list of model states saved during training in 'trajectories'
-#     l1_diffs = [torch.norm(list(trajectories[i].values())[0] - list(trajectories[i - 1].values())[0], p=1).item() for i
-#                 in range(0, len(trajectories))]
-#
-#     # Plotting the L1 differences with enhanced visualization
-#     plt.figure(figsize=(10, 4))
-#     plt.plot(l1_diffs)
-#     plt.title('Parameter Trajectory using L1-norm Differences', fontsize=15)
-#     plt.xlabel('Training Iteration', fontsize=14)
-#     plt.ylabel('L1-norm Difference', fontsize=14)
-#     plt.xticks(iterations)  # This ensures that the x-ticks represent the actual iterations
-#     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-#     plt.tight_layout()
-#     if save_path_t:
-#         plt.savefig(f'{save_path_t}.pdf')
-#         plt.clf()
-#         data_to_save = {
-#             "iterations": iterations,
-#             "l1_diffs": l1_diffs
-#         }
-#         with open(f'{save_path_t}.json', 'w', encoding='utf8') as json_file:
-#             json.dump(data_to_save, json_file)
-
-
 
 def top_eigenvalues(model, data, target, criterion, k=5):
     """
