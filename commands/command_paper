@@ -35,6 +35,7 @@ done
 
 
 ## AUTOFLIP
+for n in {1..1}
 do
     python3 main.py\
         --exp_name "CIFAR10_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/CIFAR10/AutoFLIP \
@@ -49,6 +50,7 @@ do
 done
 
 ## FEDAVG for Rand_Pruning add: --random_pruning True 
+for n in {1..1}
 do
     python3 main.py\
         --exp_name "CIFAR10_${treeshold}_${n}" --device cuda --result_path ./result_paper/20K/RedDim/CIFAR10/FedAvg \
