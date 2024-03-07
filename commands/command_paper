@@ -53,7 +53,7 @@ do
         --split_type patho --mincls 2 --test_fraction 0.2 \
         --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
         --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
-        --algorithm gtfed --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+        --algorithm Autoflip --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
         --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
         --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
 done
@@ -98,7 +98,7 @@ do
         --dataset FEMNIST \
         --split_type pre --test_fraction 0.1 --rawsmpl 0.0282\
         --model_name FEMNISTCNN --resize 28 --hidden_size 64 --dropout 0.1 --num_layers 2 \
-        --algorithm gtfed --eval_type local --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
+        --algorithm Autoflip --eval_type local --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
         --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
         --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
         --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining 0.30
@@ -126,7 +126,7 @@ do
       --dataset Shakespeare \
       --split_type pre --test_fraction 0.1 \
       --model_name NextCharLSTM --num_embeddings 80 --embedding_size 8 --hidden_size 256 --num_layers 2  --init_type xavier \
-      --algorithm gtfed --eval_fraction 1 --eval_type local --eval_every 10 --eval_metrics acc1 acc5\
+      --algorithm Autoflip --eval_fraction 1 --eval_type local --eval_every 10 --eval_metrics acc1 acc5\
       --R 200 --E 5 --C 0.016 --B 350 --beta 0.9 \
       --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
       --perc_clients_for_mask 0.03 --Patience_mask 40 --epoochs_mask 150 --mask_pruining True --treeshold_pruining 0.30
@@ -157,7 +157,7 @@ do
         --split_type patho --mincls 2 --test_fraction 0.2 \
         --rawsmpl 1.0 --resize 24  --randhf 0.5  --randjit 0.5\
         --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
-        --algorithm gtfed --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
+        --algorithm Autoflip --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
         --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
         --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
         --Patience_mask 40 --epoochs_mask 150 --perc_clients_for_mask 1 --mask_pruining True --treeshold_pruining $treeshold
