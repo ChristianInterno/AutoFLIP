@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 
-class FedavgServer(BaseServer):
+class Fedavgserver(BaseServer):
     def __init__(self, args, writer, server_dataset, client_datasets, model):
         self.args = args
         self.writer = writer
