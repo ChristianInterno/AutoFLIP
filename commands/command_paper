@@ -29,7 +29,7 @@ do
         --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
         --algorithm fedavg --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
         --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
-        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
 done
 ####################### CIFAR10 #######################
 
@@ -60,7 +60,7 @@ do
         --model_name TwoCNN --hidden_size 32 --dropout 0 --num_layers 4 --init_type xavier \
         --algorithm Autoflip --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
         --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
-        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
 done
 
 ####################### CIFAR100 #######################
@@ -92,7 +92,7 @@ for n in {1..1}
         --model_name TwoCNN --hidden_size 128 --dropout 0 --num_layers 6 --init_type xavier \
         --algorithm fedavg --eval_type both --eval_every 10 --eval_metrics acc1 acc5 f1 precision recall\
         --K 20 --R 200 --E 5 --C 0.05 --B 350 --beta 0.9 \
-        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
 done
 
 ####################### FEMNIST #######################
@@ -122,7 +122,7 @@ do
         --model_name FEMNISTCNN --resize 28 --hidden_size 64 --dropout 0.1 --num_layers 2 \
         --algorithm fedavg --eval_type local --eval_every 20 --eval_metrics acc1 acc5 f1 precision recall\
         --K 20 --R 200 --E 5 --C 0.25 --B 350 --beta 0.9 \
-        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+        --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
 done
 
 ####################### Shakespeare #######################
@@ -153,7 +153,7 @@ do
       --model_name NextCharLSTM --num_embeddings 80 --embedding_size 8 --hidden_size 256 --num_layers 2  --init_type xavier \
       --algorithm fedavg --eval_fraction 1 --eval_type local --eval_every 10 --eval_metrics acc1 acc5\
       --R 200 --E 5 --C 0.016 --B 350 --beta 0.9 \
-      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss\
+      --optimizer Adam --lr  0.0003 --lr_decay 0.99 --lr_decay_step 1 --criterion CrossEntropyLoss
 done
 
 ####################### Ablation #######################
