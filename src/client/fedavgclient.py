@@ -25,39 +25,6 @@ class FedavgClient(BaseClient):
         self.train_loader = self._create_dataloader(self.training_set, shuffle=not self.args.no_shuffle)
         self.test_loader = self._create_dataloader(self.test_set, shuffle=False)
 
-    # def random_prune(self, model, pruning_ratio=0.45):
-    #     # Gather all parameters to prune
-    #     parameters_to_prune = []
-    #     for name, param in model.named_parameters():
-    #         if 'weight' in name or 'bias' in name:  # Consider both weights and biases
-    #             parameters_to_prune.append((param, 'weight' if 'weight' in name else 'bias'))
-    #
-    #     # Calculate total number of parameters and the number to prune
-    #     total_params = sum(p.numel() for p, _ in parameters_to_prune)
-    #     params_to_prune = int(total_params * pruning_ratio)
-    #
-    #     # Prune randomly until the desired ratio is achieved
-    #     while params_to_prune > 0:
-    #         # Randomly select a parameter and a pruning proportion
-    #         param, name = random.choice(parameters_to_prune)
-    #         total_param_num = param.numel()
-    #         # Calculate how many parameters to prune from this layer
-    #         # Ensure not to prune more than the remaining unpruned parameters
-    #         prune_num = min(random.randint(1, total_param_num), params_to_prune)
-    #
-    #         # Create a random mask with the specified number of parameters set to zero
-    #         mask = torch.ones(total_param_num, dtype=torch.bool,
-    #                           device=self.args.device)  # Ensure mask is on the same device
-    #         zero_indices = random.sample(range(total_param_num), prune_num)
-    #         mask.view(-1)[zero_indices] = False  # Set selected positions to zero
-    #         mask = mask.view(param.shape)  # Reshape the mask back to the original shape
-    #
-    #         # Apply the mask to the parameter
-    #         masked_param = torch.where(mask, param.data, torch.zeros_like(param))
-    #         param.data.copy_(masked_param)
-    #
-    #         # Update the number of parameters still to prune
-    #         params_to_prune -= prune_num
 
     def random_prune(self, model, pruning_ratio=0.45):
         # Gather all parameters and their sizes
