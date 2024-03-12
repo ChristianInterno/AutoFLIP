@@ -482,7 +482,7 @@ class Autoflipserver(Autoflipbaseserver):
 
         # Assuming global_scout contains masks from clients participating in this round
         # if self.round > 1:  # Start pruning from the second round
-        aggregated_mask = torch.load(f'/home/cinterno/storage/FL2/Federated-Learning-in-PyTorch/checkpoints/mask{self.args.exp_name}.pt')
+        aggregated_mask = torch.load(f'checkpoints/mask{self.args.exp_name}.pt')
         mask_threshold  = self.args.treeshold_pruining  # Retrieve the pruning threshold from the arguments
 
         updated_mask_new = update_mask_based_on_quantiles(aggregated_mask, mask_threshold, self.args.device)
