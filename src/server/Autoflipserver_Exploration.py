@@ -496,7 +496,7 @@ class Autoflipserver(Autoflipbaseserver):
         self.modelp = self.apply_pruning_to_global_model(updated_mask_new)
         model_pruined = finalize_pruning(self.modelp)
         torch.save(model_pruined.state_dict(),f'checkpoints/InitPruinedGlobalModel/IPGB_{self.args.exp_name}.pt')
-        delete_model_file(f'/home/cinterno/storage/FL2/Federated-Learning-in-PyTorch/checkpoints/mask{self.args.exp_name}.pt')
+        delete_model_file(f'checkpoints/mask{self.args.exp_name}.pt')
         # delete_model_file(f'checkpoints/tl_base{self.args.exp_name}.ckpt')
 
 
