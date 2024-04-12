@@ -20,7 +20,7 @@ For the experimental code from this repository, see below.
 
 First, create a fresh conda environment and activate it:
 ```bash
-conda create --name autoflip python=3.8
+conda env create -f environment.yml
 conda activate autoflip
 ```
 Install the required packages:
