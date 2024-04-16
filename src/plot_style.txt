@@ -1,0 +1,44 @@
+xtick.color: 323034
+ytick.color: 323034
+text.color: 323034
+lines.markeredgecolor: black
+patch.facecolor        : bc80bd
+patch.force_edgecolor  : True
+patch.linewidth: 0.8
+scatter.edgecolors: None
+grid.color: b1afb5
+axes.titlesize: 14
+legend.title_fontsize: 11
+xtick.labelsize: 11
+ytick.labelsize: 11
+axes.labelsize: 11
+font.size: 11
+mathtext.fontset: stix
+font.family: serif
+font.serif : STIXGeneral
+lines.linewidth: 2
+legend.frameon: True
+legend.framealpha: 0.8
+legend.fontsize: 10
+legend.edgecolor: 0.9
+legend.borderpad: 0.2
+legend.columnspacing: 1.25
+legend.labelspacing:  0.25
+text.usetex: False
+axes.titlelocation: left
+axes.formatter.use_mathtext: True
+axes.autolimit_mode: round_numbers
+axes.labelpad: 3
+axes.formatter.limits: -4, 4
+axes.labelcolor: black
+axes.edgecolor: black
+axes.linewidth: 0.6
+axes.spines.right : False
+axes.spines.top : False
+axes.grid: True
+grid.alpha : 0.5
+grid.linewidth : 0.5
+figure.titlesize: 18
+figure.dpi: 600
+figure.figsize : 5.3, 4
+axes.prop_cycle : cycler('color', ['0C5DA5', '00B945', 'FF9500', 'FF2C00', '845B97', '474747', '9e9e9e'])
