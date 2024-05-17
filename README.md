@@ -1,7 +1,7 @@
 # Automated Federated Learning via Informed Pruning
 This is the repositoy for the paper AutoFLIP submitteed at AutoML  Conf'24.
 
-## Arxive Paper:
+## Arxiv Paper:
 [Automated Federated Learning via Informed Pruning](https://arxiv.org/abs/2405.10271)
 
 
