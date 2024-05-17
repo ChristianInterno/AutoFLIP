@@ -5,6 +5,8 @@ This is the repositoy for the paper AutoFLIP submitteed at AutoML  Conf'24.
 [Automated Federated Learning via Informed Pruning]([https://arxiv.org/abs/YOUR_ARXIV_ID](https://arxiv.org/abs/2405.10271))
 
 ## BibTeX formatted citation:
+```bash
+
 @misc{internò2024automated,
       title={Automated Federated Learning via Informed Pruning}, 
       author={Christian Internò and Elena Raponi and Niki van Stein and Thomas Bäck and Markus Olhofer and Yaochu Jin and Barbara Hammer},
@@ -13,6 +15,7 @@ This is the repositoy for the paper AutoFLIP submitteed at AutoML  Conf'24.
       archivePrefix={arXiv},
       primaryClass={cs.LG}
 }
+```
 
 ## Getting Started
 
