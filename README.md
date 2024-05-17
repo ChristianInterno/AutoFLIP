@@ -1,6 +1,19 @@
 # Automated Federated Learning via Informed Pruning
 This is the repositoy for the paper AutoFLIP submitteed at AutoML  Conf'24.
 
+## Paper:
+[Automated Federated Learning via Informed Pruning]([https://arxiv.org/abs/YOUR_ARXIV_ID](https://arxiv.org/abs/2405.10271))
+
+## BibTeX formatted citation:
+@misc{internò2024automated,
+      title={Automated Federated Learning via Informed Pruning}, 
+      author={Christian Internò and Elena Raponi and Niki van Stein and Thomas Bäck and Markus Olhofer and Yaochu Jin and Barbara Hammer},
+      year={2024},
+      eprint={2405.10271},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+
 ## Getting Started
 
 Before diving into the specifics, ensure you have activated your preferred virtual environment.
@@ -92,4 +105,6 @@ Start your AutoFLIP journey with the following example, which reproduces the CIF
 ```
 ## Experiments
 All runcommands for the ablation and experiments of AUtoFLIP are in `commands/command_paper.sh`.
+
+
 
