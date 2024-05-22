@@ -22,10 +22,6 @@ First, create a fresh conda environment and activate it:
 conda env create -f environment.yml
 conda activate autoflip
 ```
-Install the required packages:
-```bash
-conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 torchtext==0.13.0 cudatoolkit=11.6 -c pytorch -c conda-forge
-```
 
 Please install torch-related packages using one command provided by the official guide (See official installation guide); e.g., conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 torchtext==0.13.0 cudatoolkit=11.6 -c pytorch -c conda-forge
 
