@@ -1,5 +1,3 @@
-# Automated Federated Learning via Informed Pruning
-
 ## Getting Started
 
 Before diving into the specifics, ensure you have activated your preferred virtual environment.
