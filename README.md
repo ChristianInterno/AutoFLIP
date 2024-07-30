@@ -1,3 +1,26 @@
+# 🔄 AutoFLIP: Automated Federated Learning via Informed Pruning
+
+> **Adaptive Model Pruning in Federated Learning through Loss Exploration.** 
+
+This repository is dedicated to dynamically pruning and compressing deep learning models within federated learning frameworks, leveraging federated loss exploration to improve model efficiency and performance, particularly in non-IID data scenarios.
+
+[![OpenReview](https://img.shields.io/badge/OpenReview-Paper-green.svg?style=for-the-badge)](https://openreview.net/forum?id=dKRQ1XC0op#discussion)
+
+## OpenReview Paper:
+[AutoFLIP: Automated Federated Learning via Informed Pruning](https://openreview.net/forum?id=dKRQ1XC0op#discussion)
+
+## BibTeX formatted citation:
+```bibtex
+@inproceedings{
+intern{\`o}2024adaptive,
+title={Adaptive Model Pruning in Federated Learning through Loss Exploration},
+author={Christian Intern{\`o} and Elena Raponi and Niki van Stein and Thomas B{\"a}ck and Markus Olhofer and Yaochu Jin and Barbara Hammer},
+booktitle={2nd Workshop on Advancing Neural Network Training: Computational Efficiency, Scalability, and Resource Optimization (WANT@ICML 2024)},
+year={2024},
+url={https://openreview.net/forum?id=dKRQ1XC0op}
+}
+
+
 ## Getting Started
 
 Before diving into the specifics, ensure you have activated your preferred virtual environment.
