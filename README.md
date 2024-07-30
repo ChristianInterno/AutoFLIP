@@ -10,7 +10,6 @@ This repository is dedicated to dynamically pruning and compressing deep learnin
 [AutoFLIP: Automated Federated Learning via Informed Pruning](https://openreview.net/forum?id=dKRQ1XC0op#discussion)
 
 ## BibTeX formatted citation:
-```bibtex
 @inproceedings{
 intern{\`o}2024adaptive,
 title={Adaptive Model Pruning in Federated Learning through Loss Exploration},
