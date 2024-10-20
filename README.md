@@ -10,6 +10,7 @@ This repository is dedicated to dynamically pruning and compressing deep learnin
 [AutoFLIP: Adaptive Hybrid Model Pruning in Federated Learning through Loss Exploration](https://arxiv.org/abs/2405.10271)
 
 ## BibTeX formatted citation:
+```bash
 @misc{internò2024adaptivehybridmodelpruning,
       title={Adaptive Hybrid Model Pruning in Federated Learning through Loss Exploration}, 
       author={Christian Internò and Elena Raponi and Niki van Stein and Thomas Bäck and Markus Olhofer and Yaochu Jin and Barbara Hammer},
@@ -19,7 +20,7 @@ This repository is dedicated to dynamically pruning and compressing deep learnin
       primaryClass={cs.LG},
       url={https://arxiv.org/abs/2405.10271}, 
 }
-
+```
 
 ## Getting Started
 
